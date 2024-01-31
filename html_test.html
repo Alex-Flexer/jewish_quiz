@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function addElement() {
+            let question_type = "radio";
+            let answers_field = document.getElementById("answers");
+
+            for(let i = 0; i < 5; i++)
+            {    
+                let answer = document.createElement("div");
+                let new_answer_field = document.createElement("input");
+                new_answer_field.type = question_type;
+        
+                answers_field.appendChild(answer).appendChild(new_answer_field);
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="addElement();">create new element</button>
+    <div id="question" class="question">
+        
+    </div>
+    <div id="answers">
+
+    </div>
+</body>
+</html>

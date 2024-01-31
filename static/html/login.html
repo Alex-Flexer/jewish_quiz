@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <script src="..\static\js\auth_script.js"></script>
+    <link rel="stylesheet" href="..\static\css\styles_reg.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Регистрация</h2>
+        <form>
+            <div class="form-group">
+                <label for="email">Электронная почта:</label>
+                <input type="email" id="user_email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="user_password" name="password" required>
+            </div>
+        </form>
+        <div class="form-group">
+            <button type="submit" onclick="onLoginButtonClick()">Войти</button>
+        </div>
+    </div>
+</body>
+
+</html>
