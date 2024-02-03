@@ -97,5 +97,10 @@ async def sent_questions() -> JSONResponse:
     return JSONResponse(content={"result": 83})
 
 
+@app.get("/result")
+async def sent_questions() -> JSONResponse:
+    return FileResponse("static/html/result.html")
+
+
 if __name__ == '__main__':
     uvicorn.run('main:app', port=8000, reload=True)

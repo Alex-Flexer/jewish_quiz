@@ -5,27 +5,27 @@ let user_answers = [];
 
 
 get_questions();
-// alert(questions);
-// next_question();
+
 
 function submit_answers() {
-    const url = "http://localhost:8000/submit/"
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            "user_id": sessionStorage.getItem("user_id"),
-            "answers": user_answers
-        }),
-    })
-        .then((response) => response.text())
-        .then((text) => JSON.parse(text))
-        .then((json) => json.result)
-        .then((result) => sessionStorage.setItem("last result", result))
-        .then(() => window.location.replace("http://localhost:8000/show_results/"))
-        .catch((error) => console.log(error));
+    // const url = "http://localhost:8000/submit/"
+    // fetch(url, {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //         "user_id": sessionStorage.getItem("user_id"),
+    //         "answers": user_answers
+    //     }),
+    // })
+    //     .then((response) => response.text())
+    //     .then((text) => JSON.parse(text))
+    //     .then((json) => json.result)
+    //     .then((result) => sessionStorage.setItem("last result", result))
+    //     .then(() => window.location.replace("http://localhost:8000/show_results/"))
+    //     .catch((error) => console.log(error));
+    window.location.replace("http://localhost:8000/results/")
 }
 
 
