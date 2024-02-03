@@ -1,12 +1,16 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from data_base_questions import engine, Question, Answers
-from typing import Optional
+from typing import Optional, Union
 
 
 session = Session(engine)
 
 QUESTION_TYPES = {"radio", "text", "number", "image", "checkbox", "button"}
+
+
+def check_answer_compatibility_type_with_content(question: Question) -> Union[bool, Exception]:
+    return True
 
 
 def show_db():
@@ -33,21 +37,31 @@ def get_questions() -> list[dict[str | list[str]]]:
 
     return [{"question": question.question,
              "variants": variants_answers[ind],
-             "correct_answer": question.correct_answer}
+             "correct_answer": question.correct_answer,
+             "question_type": question.question_type}
             for ind, question in enumerate(questions)]
 
 
-def add_question(question: str, variants_answers: list[str], correct_answer: str, question_type: str):
+def add_question(question: str, variants_answers: Optional[list[str]], correct_answer: str, question_type: str):
     if question_type not in QUESTION_TYPES:
         raise TypeError("Unknown type of question")
 
-    session.add(Question(
+    response_variants_answers = None or [Answers(answer=answer)
+                                for answer in variants_answers]
+
+    new_question = Question(
         question=question,
-        variants_answers=[Answers(answer=answer)
-                          for answer in variants_answers],
+        variants_answers=response_variants_answers,
         correct_answer=correct_answer,
         question_type=question_type)
-    )
+    
+    response_checking_question: Union[bool, Exception] =\
+        check_answer_compatibility_type_with_content(new_question)
+
+    if isinstance(response_checking_question, Exception):
+        raise response_checking_question
+
+    session.add(new_question)
     session.commit()
 
 
@@ -67,7 +81,7 @@ if __name__ == "__main__":
     # add_question("how old are you ?", [
     #              '10 years old', '5', 'more old', 'i dont talk about it'], 'good', "radio")
 
-    # add_question("what is your name?", [], "5", "number")
+    # add_question("what is your favourite color?", None, "5", "number")
     # add_question()
     # clear_db()
     show_db()
