@@ -1,4 +1,13 @@
-function onTakeQuizButtonClick(){
+check_is_user_authorized();
+
+function check_is_user_authorized() {
+    console.log(sessionStorage.getItem("user_id"));
+    if (sessionStorage.getItem("user_id") == null) {
+        window.location.replace("http://localhost:8000/auth/");
+    }
+}
+
+function onTakeQuizButtonClick() {
     const user_id = document.getElementById("user_id").value;
 
     const url = 'http://localhost:8000/quiz';
@@ -17,7 +26,7 @@ function onTakeQuizButtonClick(){
         .catch((error) => console.log(error));
 }
 
-function onStartQuizButtonClick(){
+function onStartQuizButtonClick() {
     const url = 'http://localhost:8000/quiz';
     fetch(url, {
         method: "GET",

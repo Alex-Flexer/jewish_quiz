@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, String, Integer
+from sqlalchemy import ForeignKey, String, Integer, SMALLINT
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from typing import Optional
 
@@ -27,11 +27,14 @@ class User(Base):
     password: Mapped["Password"] = relationship(
         back_populates="user", cascade="all, delete-orphan")
 
+    score: Mapped["Score"] = relationship(
+        back_populates="user", cascade="all, delete-orphan")
+
     def __str__(self) -> str:
-        return f"{self.id} {self.name} {self.email}"
+        return f"{self.id} {self.name} {self.email} {self.password.password} {self.score.score}"
 
     def __repr__(self) -> str:
-        return f"{self.id} {self.name} {self.email}"
+        return f"{self.id} {self.name} {self.email} {self.password} {self.score}"
 
 
 class Password(Base):
@@ -46,10 +49,28 @@ class Password(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("user_table.id"))
 
     def __str__(self) -> str:
-        return f"{self.id} {self.password} {self.user_id}"
+        return f"{self.id} {self.user.email} {self.password}"
 
     def __repr__(self) -> str:
-        return f"{self.id} {self.password} {self.user_id}"
+        return f"{self.id} {self.user.email} {self.password}"
+
+
+class Score(Base):
+    __tablename__ = "scores_table"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+    score: Mapped[int] = mapped_column(Integer())
+
+    user: Mapped["User"] = relationship(back_populates="score")
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("user_table.id"))
+
+    def __str__(self) -> str:
+        return f"{self.id} {self.user.email} {self.score}"
+
+    def __repr__(self) -> str:
+        return f"{self.id} {self.user.email} {self.score}"
 
 
 Base.metadata.create_all(engine)

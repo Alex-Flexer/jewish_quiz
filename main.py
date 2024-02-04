@@ -5,15 +5,17 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from database_users_functions import (add_new_user, get_user_by_email,
                                       get_user_by_id, delete_user_by_email,
-                                      delete_user_by_id, ger_user_id_by_email,
+                                      delete_user_by_id, get_user_id_by_email,
+                                      get_user_score_by_id, set_user_score_by_id,
                                       user_exists)
 from database_questions_functions import get_questions, get_correct_answers
-
+from init_questions import init
 
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static", html=True), name="static")
 
+init()
 
 @app.get("/auth/")
 async def get_auth_page() -> FileResponse:
@@ -77,13 +79,29 @@ async def find_user(requset: Request) -> JSONResponse:
 @app.post("/submit_answers")
 async def check_answers(request: Request) -> JSONResponse:
     json = await request.json()
-    answers = get_correct_answers()
-    amount_questions = len(answers)
+
+    user_id = json["user_id"]
+
+    user_answers = json["answers"]
+    correct_answers = get_correct_answers()
+
+    amount_questions = len(correct_answers)
+    
+    print(user_answers)
+    print(correct_answers)
     amount_correct_answers = sum([int(user_answer == correct_answer)
-                                  for user_answer, correct_answer in zip(answers, json)])
+                                  for user_answer, correct_answer in zip(correct_answers, user_answers)])
 
-    response = {"result": amount_correct_answers / amount_questions}
+    new_score = round((amount_correct_answers / amount_questions) * 100)
+    response = {"result": new_score}
 
+    is_new_record = new_score > get_user_score_by_id(user_id=user_id).score
+
+    if is_new_record:
+        set_user_score_by_id(user_id=user_id, new_score=new_score)
+
+    response = {"result": new_score, "is_new_record": is_new_record}
+    print(get_user_score_by_id(user_id))
     return JSONResponse(content=response, status_code=200)
 
 
@@ -92,14 +110,9 @@ async def sent_questions() -> JSONResponse:
     return JSONResponse(get_questions())
 
 
-@app.get("/show_results")
-async def sent_questions() -> JSONResponse:
-    return JSONResponse(content={"result": 83})
-
-
 @app.get("/result")
 async def sent_questions() -> JSONResponse:
-    return FileResponse("static/html/result.html")
+    return FileResponse("static/html/result_page.html")
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-from typing import List, Optional
+from typing import Any, List, Optional, Union
 
 from sqlalchemy import create_engine
 
@@ -20,7 +20,7 @@ class Question(Base):
 
     question_type: Mapped[str] = mapped_column(String(20))
 
-    variants_answers: Mapped[List["Answers"]] = relationship(
+    variants_answers: Mapped[Union[None, List["Answers"]]] = relationship(
         back_populates="question", cascade="all, delete-orphan"
     )
 
@@ -30,6 +30,12 @@ class Question(Base):
     def __repr__(self) -> str:
         return f"{self.id} {self.question} {self.correct_answer} {self.variants_answers} {self.question_type}"
 
+    def __init__(self, **kwargs: Any):
+        if kwargs["variants_answers"] == None:
+            kwargs.pop("variants_answers")
+
+        super().__init__(**kwargs)
+
 
 class Answers(Base):
     __tablename__ = "answers_table"
@@ -38,7 +44,8 @@ class Answers(Base):
 
     answer: Mapped[Optional[str]] = mapped_column(String(20))
 
-    question: Mapped["Question"] = relationship(back_populates="variants_answers")
+    question: Mapped["Question"] = relationship(
+        back_populates="variants_answers")
 
     question_id: Mapped[int] = mapped_column(ForeignKey("questions_table.id"))
 

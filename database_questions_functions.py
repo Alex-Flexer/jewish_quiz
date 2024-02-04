@@ -10,7 +10,21 @@ QUESTION_TYPES = {"radio", "text", "number", "image", "checkbox", "button"}
 
 
 def check_answer_compatibility_type_with_content(question: Question) -> Union[bool, Exception]:
-    return True
+    question_type = question.question_type
+    question_variants = question.variants_answers
+
+    if question_type == "text" and question_variants:
+        return TypeError("Questions type text must not have any variants for answers: "
+                         f"you have {question_variants}")
+
+    if question_type in {"radio", "checkbox"} and not isinstance(question_variants, list):
+        return TypeError(f"Questions type {question_type} must be list: "
+                         f"you gave {type(question_variants)}")
+
+    if question_type in {"radio", "checkbox"} and not isinstance(question_variants, list):
+        return TypeError(f"Questions type {question_type} must be list: "
+                         f"you gave {type(question_variants)}")
+    
 
 
 def show_db():
@@ -46,15 +60,15 @@ def add_question(question: str, variants_answers: Optional[list[str]], correct_a
     if question_type not in QUESTION_TYPES:
         raise TypeError("Unknown type of question")
 
-    response_variants_answers = None or [Answers(answer=answer)
-                                for answer in variants_answers]
+    response_variants_answers = [Answers(answer=answer)
+                                 for answer in variants_answers] if variants_answers else None
 
     new_question = Question(
         question=question,
         variants_answers=response_variants_answers,
         correct_answer=correct_answer,
         question_type=question_type)
-    
+
     response_checking_question: Union[bool, Exception] =\
         check_answer_compatibility_type_with_content(new_question)
 
@@ -78,10 +92,9 @@ if __name__ == "__main__":
     # delete_user_by_id(2)
     # delete_user_by_email("sasha.flexer@gmail.com")
     # clear_db()
-    # add_question("how old are you ?", [
-    #              '10 years old', '5', 'more old', 'i dont talk about it'], 'good', "radio")
 
     # add_question("what is your favourite color?", None, "5", "number")
     # add_question()
     # clear_db()
-    show_db()
+    ...
+    # show_db()
