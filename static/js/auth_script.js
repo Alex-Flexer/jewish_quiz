@@ -1,3 +1,7 @@
+if (sessionStorage.getItem("user_id") != null) {
+    window.location.replace("http://localhost:8000/home/");
+}
+
 function onRegisterButtonClick() {
     const url = "http://localhost:8000/add_user";
 

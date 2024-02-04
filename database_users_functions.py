@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from data_base_users import engine, User, Password, Score
+from database_users import engine, User, Password, Score
 from typing import Optional
 
 
@@ -46,7 +46,7 @@ def add_new_user(name: str, email: str, password: str, score: int = 0) -> bool:
     return True
 
 
-def get_user_score_by_id(user_id: int):
+def get_user_record_by_id(user_id: int):
     user = get_user_by_id(user_id)
     return user.score
 

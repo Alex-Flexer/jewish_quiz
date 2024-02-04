@@ -1,44 +1,37 @@
-check_is_user_authorized();
-
-function check_is_user_authorized() {
-    console.log(sessionStorage.getItem("user_id"));
-    if (sessionStorage.getItem("user_id") == null) {
-        window.location.replace("http://localhost:8000/auth/");
-    }
+console.log(sessionStorage.getItem("user_id"));
+if (sessionStorage.getItem("user_id") == null) {
+    window.location.replace("http://localhost:8000/auth/");
 }
 
-function onTakeQuizButtonClick() {
-    const user_id = document.getElementById("user_id").value;
+load_best_score()
 
-    const url = 'http://localhost:8000/quiz';
+function load_best_score() {
+    const url = "http://localhost:8000/get_record";
+    const user_id = sessionStorage.getItem("user_id");
+
     fetch(url, {
-        method: "POST",
-        headers: {
+        "method": "POST",
+        "headers": {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-            "user_id": user_id
+        "body": JSON.stringify({
+            "user_id": user_id,
         }),
     })
         .then((response) => response.text())
         .then((text) => JSON.parse(text))
-        .then((json) => json_response = json)
+        .then((json) => json.record)
+        .then((record) => {
+            document.getElementById("record").innerHTML = record;
+        })
         .catch((error) => console.log(error));
 }
 
-function onStartQuizButtonClick() {
-    const url = 'http://localhost:8000/quiz';
-    fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            "user_id": user_email
-        }),
-    })
-        .then((response) => response.text())
-        .then((text) => JSON.parse(text))
-        .then((json) => json_response = json)
-        .catch((error) => console.log(error));
+function start_quiz() {
+    window.location.replace("http://localhost:8000/quiz")
+}
+
+function logout() {
+    sessionStorage.removeItem("user_id");
+    window.location.replace("http://localhost:8000/auth/");
 }

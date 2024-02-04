@@ -1,3 +1,7 @@
+if (sessionStorage.getItem("user_id") == null) {
+    window.location.replace("http://localhost:8000/auth/");
+}
+
 let questions;
 let id_current_question = -1;
 let current_answer;
