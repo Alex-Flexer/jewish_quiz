@@ -1,6 +1,8 @@
+for
+
 if (sessionStorage.getItem("user_id") != null) {
-    window.location.replace("http://localhost:8000/home/");
-}
+        window.location.replace("http://localhost:8000/home/");
+    }
 
 function onRegisterButtonClick() {
     const url = "http://localhost:8000/add_user";
@@ -44,7 +46,7 @@ function onLoginButtonClick() {
     const url = "http://localhost:8000/find_user";
     const user_email = document.getElementById("user_email").value;
     const user_password = document.getElementById("user_password").value;
-    
+
     console.log(typeof user_email);
     let status;
 

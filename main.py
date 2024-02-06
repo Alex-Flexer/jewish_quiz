@@ -4,7 +4,6 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from database_users_functions import (add_new_user, get_user_by_email,
-                                      get_user_id_by_email,
                                       get_user_record_by_id, set_user_score_by_id,
                                       user_exists)
 from database_questions_functions import get_questions, get_correct_answers
@@ -19,32 +18,32 @@ init()
 
 
 @app.get("/auth/")
-async def get_auth_page() -> FileResponse:
+async def send_auth_page() -> FileResponse:
     return FileResponse(r"static/html/auth_page.html")
 
 
 @app.get("/home/")
-async def get_home_page() -> FileResponse:
+async def send_home_page() -> FileResponse:
     return FileResponse("static/html/home_page.html")
 
 
 @app.get("/quiz/")
-async def get_quiz_page() -> FileResponse:
+async def send_quiz_page() -> FileResponse:
     return FileResponse("static/html/test.html")
 
 
 @app.get("/registration/")
-async def get_registration_page() -> FileResponse:
+async def send_registration_page() -> FileResponse:
     return FileResponse("static/html/registration.html")
 
 
 @app.get("/login/")
-async def get_login_page() -> FileResponse:
+async def send_login_page() -> FileResponse:
     return FileResponse("static/html/login.html")
 
 
 @app.post("/add_user")
-async def create_user(requset: Request) -> JSONResponse:
+async def add_user(requset: Request) -> JSONResponse:
     json = await requset.json()
 
     name = json["name"]
@@ -88,9 +87,7 @@ async def check_answers(request: Request) -> JSONResponse:
 
     amount_questions = len(correct_answers)
 
-    print(user_answers)
-    print(correct_answers)
-    amount_correct_answers = sum([int(user_answer == correct_answer)
+    amount_correct_answers = sum([(user_answer == correct_answer)
                                   for user_answer, correct_answer in zip(correct_answers, user_answers)])
 
     new_score = round((amount_correct_answers / amount_questions) * 100)
@@ -102,17 +99,17 @@ async def check_answers(request: Request) -> JSONResponse:
         set_user_score_by_id(user_id=user_id, new_score=new_score)
 
     response = {"result": new_score, "is_new_record": is_new_record}
-    print(get_user_record_by_id(user_id))
+
     return JSONResponse(content=response, status_code=200)
 
 
 @app.get("/get_questions")
-async def sent_questions() -> JSONResponse:
+async def send_questions() -> JSONResponse:
     return JSONResponse(get_questions())
 
 
 @app.post("/get_record")
-async def sent_questions(request: Request) -> JSONResponse:
+async def send_record(request: Request) -> JSONResponse:
     json = await request.json()
 
     user_id = json["user_id"]
@@ -122,7 +119,7 @@ async def sent_questions(request: Request) -> JSONResponse:
 
 
 @app.get("/result")
-async def send_questions() -> JSONResponse:
+async def get_result_page() -> FileResponse:
     return FileResponse("static/html/result_page.html")
 
 
