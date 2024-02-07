@@ -4,7 +4,9 @@ function show_result() {
     let result = sessionStorage.getItem("result");
 
     let result_field = document.getElementById("result");
-    result_field.innerHTML = "Your result: " + result;
+    result_field.innerHTML = result + "%";
+}
 
-    console.log(result_field);
+function home() {
+    document.location.replace("http://localhost:8000/israel")
 }

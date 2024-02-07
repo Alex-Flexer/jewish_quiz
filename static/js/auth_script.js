@@ -1,5 +1,5 @@
 if (sessionStorage.getItem("user_id") != null) {
-    window.location.replace("http://localhost:8000/home11/");
+    window.location.replace("http://localhost:8000/israel/");
 }
 
 function registrate_user() {
@@ -74,7 +74,7 @@ function check_user(json, status) {
             alert("Welcome!");
             sessionStorage.setItem("user_id", json.id);
             sessionStorage.setItem("token", json.token);
-            window.location.replace("http://localhost:8000/home/");
+            window.location.replace("http://localhost:8000/israel/");
         }
         else {
             alert("Uncorrect password");

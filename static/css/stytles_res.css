@@ -19,26 +19,6 @@
     color: white;
 }
 
-input[type="radio"] {
-    width: 25px;
-    height: 25px;
-}
-
-input[type="number"] {
-    font-size: 30px;
-}
-
-input[type="text"] {
-    font-size: 30px;
-}
-
-#button {
-    position: relative;
-    font-size: 50px;
-    left: 50px;
-    top: 100px;
-}
-
 #question {
     text-align: center;
     border: none;
@@ -61,30 +41,37 @@ body {
 }
 
 
-img {
+.title_result {
+    font-size: 90px;
+    color: #41577c;
+    background-color: white;
+    width: 40%;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 60px;
+}
+
+#result_box {
     position: relative;
-}
+    top: 80px;
 
-.headline {
     font-family: hummus;
-    font-size: 65px;
-    padding: 8px;
-    width: 300px;
-    color: #41577c;
-    border-radius: 10px;
-    background-color: white;
 }
 
-.subheadline {
-    font-size: 40px;
-    width: 600px;
+#result {
+    font-size: 200px;
     color: #41577c;
-    border-radius: 10px;
     background-color: white;
+    width: 25%;
+    border-radius: 10px;
+    padding: 15px;
 }
 
 button {
-    /* font-size: 40px; */
+    position: absolute;
+    left: 2%;
+    top: 85%;
+    font-size: 40px;
     padding: 10px 20px;
     background-color: white;
     color: #41577c;
@@ -99,4 +86,11 @@ button {
 button:hover {
     background-color: #d3dbed;
     transform: scale(1.1);
+}
+
+img {
+    width: 500px;
+    position: absolute;
+    left: 75%;
+    top: 45%;
 }

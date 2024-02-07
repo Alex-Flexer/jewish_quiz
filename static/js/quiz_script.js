@@ -35,13 +35,16 @@ function check_user_loged() {
 }
 
 
-
 let questions;
 let id_current_question = -1;
 let user_answers = [];
 
 get_questions();
 
+
+function home() {
+    window.location.replace("http://localhost:8000/israel");
+}
 
 function get_questions() {
     const url = "http://localhost:8000/questions/"

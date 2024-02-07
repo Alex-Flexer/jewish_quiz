@@ -22,7 +22,7 @@ async def send_auth_page() -> FileResponse:
     return FileResponse(r"static/html/auth_page.html")
 
 
-@app.get("/home/")
+@app.get("/israel/")
 async def send_home_page() -> FileResponse:
     return FileResponse("static/html/home_page.html")
 

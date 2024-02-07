@@ -1,3 +1,5 @@
+let pos_last_light_candle = -1;
+
 if (!check_user_loged()) {
     window.location.replace("http://localhost:8000/auth/");
 }
@@ -35,6 +37,32 @@ function check_user_loged() {
     return true;
 }
 
+function light_candle(candle) {
+    let current_pos = parseInt(candle.style.left.replace("px", ""));
+    console.log(current_pos, pos_last_light_candle);
+
+    if (pos_last_light_candle == 1388 && current_pos != 1567) {
+        return;
+    }
+
+    if (pos_last_light_candle == -1 && current_pos == 1388) {
+        console.log("some text");
+        candle.style.opacity = 100;
+        pos_last_light_candle = current_pos;
+        return;
+    }
+    else if (pos_last_light_candle == -1) {
+        return;
+    }
+
+    if (pos_last_light_candle - current_pos > 65 &&
+        !(pos_last_light_candle == 1447 && current_pos == 1327)) {
+        return;
+    }
+
+    pos_last_light_candle = current_pos;
+    candle.style.opacity = 100;
+}
 
 function load_best_score() {
     const url = "http://localhost:8000/record";
