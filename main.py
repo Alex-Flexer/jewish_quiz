@@ -84,11 +84,10 @@ async def login_user(requset: Request) -> JSONResponse:
     user_id = user.id
 
     accepted_response = user.password.password == password
-
-    if accepted_response:
-        create_token(user_id=user_id)
+    
+    current_token = create_token(user_id=user_id) if accepted_response else None
         
-    response_json = {"id": user.id, "accepted": accepted_response}
+    response_json = {"id": user.id, "token": current_token, "accepted": accepted_response}
 
     return JSONResponse(content=response_json, status_code=200)
 

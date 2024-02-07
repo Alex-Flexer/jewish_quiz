@@ -3,17 +3,34 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="..\static\js\home_script.js"></script>
-    <title>Document</title>
+
+    <link rel="stylesheet" href="../static/css/styles_home_page.css">
+    <script type="module" src="../static/js/check_user_loged_script.js"></script>
+
+    <title>home</title>
 </head>
 
 <body>
-    <button onclick="start_quiz();">Let's start Quiz</button>
-    <button onclick="">I want watch scores anther users</button>
-    <button onclick="logout()">I hate this accout, let me to log it out!</button>
-    <div>Your best score: </div>
-    <div id="record"></div>
+
+    <button class="take_test_button" onclick="start_quiz();">Пройти тест на еврея</button>
+    <button class="check_another_users_button" onclick="">Посмотреть самых чистокровных</button>
+    <button class="logout_button" onclick="logout()">Хочется шашлычка из свининки и пельмешек тарельку
+        заточить...</button>
+    <div class="best_score" id="record"></div>
+    <img class="money" src="../static/images/мешок с деньгами.jpg">
+    <img class="hanuka" src="../static/images/ханукия.jpg">
+
+    <img style="left: 1207px;" class="fire" src="../static/images/огонек.jpg">
+    <img style="left: 1247px;" class="fire" src="../static/images/огонек.jpg">
+    <img style="left: 1287px;" class="fire" src="../static/images/огонек.jpg">
+    <img style="left: 1327px;" class="fire" src="../static/images/огонек.jpg">
+    <img style="left: 1388px;" class="fire" src="../static/images/огонек.jpg">
+    <img style="left: 1447px;" class="fire" src="../static/images/огонек.jpg">
+    <img style="left: 1487px;" class="fire" src="../static/images/огонек.jpg">
+    <img style="left: 1527px;" class="fire" src="../static/images/огонек.jpg">
+    <img style="left: 1567px;" class="fire" src="../static/images/огонек.jpg">
+
+    <script src="../static/js/home_script.js"></script>
 </body>
 
 </html>

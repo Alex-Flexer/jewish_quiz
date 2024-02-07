@@ -8,28 +8,41 @@
     <script src="..\static\js\auth_script.js"></script>
     <link rel="stylesheet" href="..\static\css\styles_reg.css">
 </head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <script src="..\static\js\auth_script.js"></script>
+    <link rel="stylesheet" href="..\static\css\styles_reg.css">
+</head>
 
 <body>
-    <div class="container">
-        <h2>Регистрация</h2>
-        <form>
-            <div class="form-group">
-                <label for="username">Имя пользователя:</label>
-                <input type="text" id="user_name" name="username" required>
+
+    <div class="reg_box">
+        <center>
+            <div class="headline">
+                <h1>Регистрация</h1>
             </div>
-            <div class="form-group">
-                <label for="email">Электронная почта:</label>
-                <input type="email" id="user_email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Пароль:</label>
-                <input type="password" id="user_password" name="password" required>
-            </div>
-        </form>
-        <div class="form-group">
-            <button type="submit" onclick="registeration_button();">Зарегистрироваться</button>
-        </div>
+        </center>
+        <label for="name">На какого записываем ?</label>
+        <input type="text" name="name" id="user_name" placeholder="AbramR_999">
+
+        <label for="email">Куда конвертики с шекелями кидать ?</label>
+        <input type="text" name="email" id="user_email" placeholder="abram.rozenberg@mail.isr">
+
+        <label for="email">Номер абсолютно вам не нужной пластиковой штучки:</label>
+        <input type="text" name="email" id="user_email" placeholder="0123 4567 8901 2345">
+
+        <label for="password">Пароль уже не поможет, но напишите что-нибудь все равно:</label>
+        <input type="password" name="password" id="user_password" placeholder="Abramka_2006">
+
+        <button onclick="registrate_user()" style="font-size: 17px; width: 300px;">Начать хим-завивку пейсов</button>
     </div>
 </body>
+
+</html>
 
 </html>

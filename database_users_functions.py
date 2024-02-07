@@ -26,8 +26,8 @@ def get_user_id_by_email(email: str) -> int:
     return session.scalar(select(User).where(User.email == email)).id
 
 
-def get_user_by_id(_id: int) -> Optional[User]:
-    return session.scalar(select(User).where(User.id == _id))
+def get_user_by_id(user_id: int) -> Optional[User]:
+    return session.scalar(select(User).where(User.id == user_id))
 
 
 def get_user_by_email(email: str) -> Optional[User]:
@@ -58,10 +58,10 @@ def set_user_score_by_id(user_id: int, new_score: int):
     session.commit()
 
 
-def delete_user_by_id(_id: int) -> None:
-    session.query(User).filter_by(id=_id).delete()
-    session.query(Password).filter_by(user_id=_id).delete()
-    session.query(Score).filter_by(user_id=_id).delete()
+def delete_user_by_id(user_id: int) -> None:
+    session.query(User).filter_by(id=user_id).delete()
+    session.query(Password).filter_by(user_id=user_id).delete()
+    session.query(Score).filter_by(user_id=user_id).delete()
     session.commit()
 
 
@@ -79,9 +79,14 @@ def get_token_by_id(user_id: int):
     return get_user_by_id(user_id=user_id).token.token
 
 
-def create_token(user_id):
+def create_token(user_id) -> int:
     user = get_user_by_id(user_id)
+
+    if not user:
+        raise KeyError(f"Does not exist user by id {user_id}")
+
     user.token = Token(token=token_urlsafe(20))
+    return user.token.token
 
 
 def show_db(db_name) -> None:

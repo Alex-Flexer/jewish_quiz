@@ -1,8 +1,8 @@
 if (sessionStorage.getItem("user_id") != null) {
-        window.location.replace("http://localhost:8000/home/");
-    }
+    window.location.replace("http://localhost:8000/home11/");
+}
 
-function registeration_button() {
+function registrate_user() {
     const url = "http://localhost:8000/add_user";
 
     const user_name = document.getElementById("user_name").value;
@@ -29,18 +29,18 @@ function registeration_button() {
 
 function check_user_exist(status) {
     if (status == 200) {
-        alert("Account was successfully created! Please log in.")
+        alert("Аккаунт был успешно создан! Пожалуйста авторизуйтесь.")
         window.location.replace("http://localhost:8000/login/");
     }
     else if (status == 403) {
-        alert("User with this email already exists.");
+        alert("Пользователь с такой почтой уже существует.");
     }
     else {
-        alert("Unknown error.");
+        alert("Неизвестная ошибка.");
     }
 }
 
-function login_button() {
+function login_user() {
     const url = "http://localhost:8000/login_user";
     const user_email = document.getElementById("user_email").value;
     const user_password = document.getElementById("user_password").value;
@@ -73,6 +73,7 @@ function check_user(json, status) {
         if (accepted) {
             alert("Welcome!");
             sessionStorage.setItem("user_id", json.id);
+            sessionStorage.setItem("token", json.token);
             window.location.replace("http://localhost:8000/home/");
         }
         else {
@@ -83,3 +84,12 @@ function check_user(json, status) {
         alert("User was not found");
     }
 }
+
+function registration_button() {
+    window.location.replace("http://localhost:8000/registration");
+}
+
+function login_button() {
+    window.location.replace("http://localhost:8000/login");
+}
+

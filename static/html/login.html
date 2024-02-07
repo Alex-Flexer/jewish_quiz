@@ -10,21 +10,21 @@
 </head>
 
 <body>
-    <div class="container">
-        <h2>Регистрация</h2>
-        <form>
-            <div class="form-group">
-                <label for="email">Электронная почта:</label>
-                <input type="email" id="user_email" name="email" required>
+
+    <div class="reg_box">
+        <center>
+            <div class="headline">
+                <h1>Авторизация</h1>
             </div>
-            <div class="form-group">
-                <label for="password">Пароль:</label>
-                <input type="password" id="user_password" name="password" required>
-            </div>
-        </form>
-        <div class="form-group">
-            <button type="submit" onclick="login_button()">Войти</button>
-        </div>
+        </center>
+
+        <label for="email">Куда конвертики с шекелями кидать ?</label>
+        <input type="text" name="email" id="user_email" placeholder="abram.rozenberg@mail.isr">
+
+        <label for="password">Пароль уже не поможет, но напишите что-нибудь все равно:</label>
+        <input type="password" name="password" id="user_password" placeholder="Abramka_2006">
+
+        <button onclick="login_user()" style="font-size: 30px; width: 150px;">להיכנס</button>
     </div>
 </body>
 

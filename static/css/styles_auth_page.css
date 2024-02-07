@@ -1,0 +1,66 @@
+@font-face {
+    font-family: hummus;
+    src: url("../fonts/hummus.ttf");
+}
+
+
+.login_button {
+    position: absolute;
+    left: 1100px;
+    top: 550px;
+}
+
+.reg_button {
+    position: absolute;
+    left: 580px;
+    top: 550px;
+}
+
+
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #41577c;
+    margin: 0;
+    padding: 0;
+}
+
+
+img {
+    position: relative;
+}
+
+.headline {
+    font-family: hummus;
+    font-size: 65px;
+    padding: 8px;
+    width: 300px;
+    color: #41577c;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.subheadline {
+    font-size: 40px;
+    width: 600px;
+    color: #41577c;
+    border-radius: 10px;
+    background-color: white;
+}
+
+button {
+    font-size: 40px;
+    padding: 10px 20px;
+    background-color: white;
+    color: #41577c;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    font-weight: 1000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+button:hover {
+    background-color: #d3dbed;
+    transform: scale(1.1);
+}
