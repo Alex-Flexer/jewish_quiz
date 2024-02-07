@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from database_users import engine, User, Password, Score
+from database_users import engine, User, Password, Score, Token
 from typing import Optional
-
+from secrets import token_urlsafe
 
 session = Session(engine)
 
@@ -69,6 +69,19 @@ def delete_user_by_email(email: str) -> None:
     user_id = get_user_id_by_email(email)
     delete_user_by_id(user_id)
     session.commit()
+
+
+def delete_token(token: str):
+    session.query(Token).filter_by(token=token).delete()
+
+
+def get_token_by_id(user_id: int):
+    return get_user_by_id(user_id=user_id).token.token
+
+
+def create_token(user_id):
+    user = get_user_by_id(user_id)
+    user.token = Token(token=token_urlsafe(20))
 
 
 def show_db(db_name) -> None:

@@ -1,18 +1,17 @@
-if (sessionStorage.getItem("user_id") == null) {
-    window.location.replace("http://localhost:8000/auth/");
-}
+// import { check_user_loged } from './check_user_loged_script.js';
+
+
+// check_user_loged();
 
 let questions;
 let id_current_question = -1;
-let current_answer;
 let user_answers = [];
-
 
 get_questions();
 
 
 function get_questions() {
-    const url = "http://localhost:8000/get_questions/"
+    const url = "http://localhost:8000/questions/"
     fetch(url, {
         method: "GET",
         headers: {

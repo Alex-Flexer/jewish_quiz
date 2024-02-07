@@ -1,10 +1,8 @@
-for
-
 if (sessionStorage.getItem("user_id") != null) {
         window.location.replace("http://localhost:8000/home/");
     }
 
-function onRegisterButtonClick() {
+function registeration_button() {
     const url = "http://localhost:8000/add_user";
 
     const user_name = document.getElementById("user_name").value;
@@ -32,7 +30,7 @@ function onRegisterButtonClick() {
 function check_user_exist(status) {
     if (status == 200) {
         alert("Account was successfully created! Please log in.")
-        window.location.replace("http://localhost:8000/auth/");
+        window.location.replace("http://localhost:8000/login/");
     }
     else if (status == 403) {
         alert("User with this email already exists.");
@@ -42,8 +40,8 @@ function check_user_exist(status) {
     }
 }
 
-function onLoginButtonClick() {
-    const url = "http://localhost:8000/find_user";
+function login_button() {
+    const url = "http://localhost:8000/login_user";
     const user_email = document.getElementById("user_email").value;
     const user_password = document.getElementById("user_password").value;
 

@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from database_users_functions import (add_new_user, get_user_by_email,
                                       get_user_record_by_id, set_user_score_by_id,
-                                      user_exists)
+                                      user_exists, delete_token, get_token_by_id, create_token)
 from database_questions_functions import get_questions, get_correct_answers
 from init_questions import init
 
@@ -42,15 +42,26 @@ async def send_login_page() -> FileResponse:
     return FileResponse("static/html/login.html")
 
 
+@app.get("/questions")
+async def send_questions() -> JSONResponse:
+    return JSONResponse(get_questions())
+
+
+@app.get("/result")
+async def get_result_page() -> FileResponse:
+    return FileResponse("static/html/result_page.html")
+
+
 @app.post("/add_user")
 async def add_user(requset: Request) -> JSONResponse:
+    
     json = await requset.json()
 
     name = json["name"]
     email = json["email"]
     password = json["password"]
 
-    print(name, email, password)
+    print(name, email, password) 
     if user_exists(email):
         return JSONResponse(content={}, status_code=403)
 
@@ -59,8 +70,8 @@ async def add_user(requset: Request) -> JSONResponse:
     return JSONResponse(content={}, status_code=200)
 
 
-@app.post("/find_user")
-async def find_user(requset: Request) -> JSONResponse:
+@app.post("/login_user")
+async def login_user(requset: Request) -> JSONResponse:
     json = await requset.json()
 
     email = json["email"]
@@ -70,10 +81,24 @@ async def find_user(requset: Request) -> JSONResponse:
         return JSONResponse(content={}, status_code=404)
 
     user = get_user_by_email(email=email)
+    user_id = user.id
+
     accepted_response = user.password.password == password
+
+    if accepted_response:
+        create_token(user_id=user_id)
+        
     response_json = {"id": user.id, "accepted": accepted_response}
 
     return JSONResponse(content=response_json, status_code=200)
+
+
+@app.post("/logout")
+async def logout_user(requset: Request):
+    json = await requset.json()
+
+    token = json["token"]
+    delete_token(token=token)
 
 
 @app.post("/submit_answers")
@@ -103,12 +128,19 @@ async def check_answers(request: Request) -> JSONResponse:
     return JSONResponse(content=response, status_code=200)
 
 
-@app.get("/get_questions")
-async def send_questions() -> JSONResponse:
-    return JSONResponse(get_questions())
+@app.post("/check/user")
+async def check_user(request: Request) -> JSONResponse:
+    json = await request.json()
+
+    user_id = json["user_id"]
+    token = json["token"]
+
+    is_token_correct = get_token_by_id(user_id=user_id) == token
+
+    return JSONResponse(content={"is_token_correct": is_token_correct})
 
 
-@app.post("/get_record")
+@app.post("/record")
 async def send_record(request: Request) -> JSONResponse:
     json = await request.json()
 
@@ -116,11 +148,6 @@ async def send_record(request: Request) -> JSONResponse:
     record = get_user_record_by_id(user_id=user_id).score
 
     return JSONResponse(content={"record": record})
-
-
-@app.get("/result")
-async def get_result_page() -> FileResponse:
-    return FileResponse("static/html/result_page.html")
 
 
 if __name__ == '__main__':
