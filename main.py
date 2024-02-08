@@ -52,25 +52,26 @@ async def get_result_page() -> FileResponse:
     return FileResponse("static/html/result_page.html")
 
 
-@app.get("/users/get/10")
-async def get_result_page() -> FileResponse:
-    users = get_all_users()
-    users = sorted(users, key=lambda user: user.score)
+@app.get("/get/users/10")
+async def get_result_page() -> JSONResponse:
+    users = get_all_users()[:10]
+    users = sorted(users, key=lambda user: user.score.score, reverse=True)
 
-    # response = {"users": users}
-    # return FileResponse("static/html/result_page.html")
+    response = {"users": [{"name": user.name, "email": user.email, "score": user.score.score}
+                          for user in users]}
+    return JSONResponse(content=response, status_code=200)
 
 
 @app.post("/add_user")
 async def add_user(requset: Request) -> JSONResponse:
-    
+
     json = await requset.json()
 
     name = json["name"]
     email = json["email"]
     password = json["password"]
 
-    print(name, email, password) 
+    print(name, email, password)
     if user_exists(email):
         return JSONResponse(content={}, status_code=403)
 
@@ -93,10 +94,12 @@ async def login_user(requset: Request) -> JSONResponse:
     user_id = user.id
 
     accepted_response = user.password.password == password
-    
-    current_token = create_token(user_id=user_id) if accepted_response else None
-        
-    response_json = {"id": user.id, "token": current_token, "accepted": accepted_response}
+
+    current_token = create_token(
+        user_id=user_id) if accepted_response else None
+
+    response_json = {"id": user.id, "token": current_token,
+                     "accepted": accepted_response}
 
     return JSONResponse(content=response_json, status_code=200)
 
@@ -156,6 +159,11 @@ async def send_record(request: Request) -> JSONResponse:
     record = get_user_record_by_id(user_id=user_id).score
 
     return JSONResponse(content={"record": record})
+
+
+@app.get("/leaderboard")
+async def send_record() -> FileResponse:
+    return FileResponse("static\html\leader_board.html")
 
 
 if __name__ == '__main__':

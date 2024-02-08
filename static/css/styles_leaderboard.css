@@ -1,0 +1,55 @@
+@font-face {
+    font-family: hummus;
+    src: url("../fonts/hummus.ttf");
+}
+
+
+table {
+    /* color: whitesmoke; */
+    position: relative;
+    top: 100px;
+    border-collapse: collapse;
+    border: 4px solid whitesmoke;
+    width: 70%;
+
+    /* border: white; */
+    /* border-width: thick; */
+    /* border-color: white; */
+}
+
+th,
+td,
+tr {
+    font-size: 30px;
+    color: whitesmoke;
+    border: 3px solid white;
+}
+
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #41577c;
+    margin: 0;
+    padding: 0;
+}
+
+
+button {
+    position: absolute;
+    top: 80%;
+    left: 3%;
+    font-size: 40px;
+    padding: 10px 20px;
+    background-color: white;
+    color: #41577c;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    font-weight: 1000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+button:hover {
+    background-color: #d3dbed;
+    transform: scale(1.1);
+}

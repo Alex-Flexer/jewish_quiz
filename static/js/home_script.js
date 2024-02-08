@@ -37,6 +37,10 @@ function check_user_loged() {
     return true;
 }
 
+function open_leaderboard(){
+    window.location.replace("http://localhost:8000/leaderboard")
+}
+
 function light_candle(candle) {
     let current_pos = parseInt(candle.style.left.replace("px", ""));
     console.log(current_pos, pos_last_light_candle);
