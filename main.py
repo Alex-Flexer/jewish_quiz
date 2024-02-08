@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from database_users_functions import (add_new_user, get_user_by_email,
-                                      get_user_record_by_id, set_user_score_by_id,
+                                      get_user_record_by_id, set_user_score_by_id, get_all_users,
                                       user_exists, delete_token, get_token_by_id, create_token)
 from database_questions_functions import get_questions, get_correct_answers
 from init_questions import init
@@ -50,6 +50,15 @@ async def send_questions() -> JSONResponse:
 @app.get("/result")
 async def get_result_page() -> FileResponse:
     return FileResponse("static/html/result_page.html")
+
+
+@app.get("/users/get/10")
+async def get_result_page() -> FileResponse:
+    users = get_all_users()
+    users = sorted(users, key=lambda user: user.score)
+
+    # response = {"users": users}
+    # return FileResponse("static/html/result_page.html")
 
 
 @app.post("/add_user")

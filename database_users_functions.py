@@ -33,6 +33,8 @@ def get_user_by_id(user_id: int) -> Optional[User]:
 def get_user_by_email(email: str) -> Optional[User]:
     return session.scalar(select(User).where(User.email == email))
 
+def get_all_users():
+    return session.query(User).all()
 
 def add_new_user(name: str, email: str, password: str, score: int = 0) -> bool:
     if user_exists(email=email):
