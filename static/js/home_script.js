@@ -37,7 +37,7 @@ function check_user_loged() {
     return true;
 }
 
-function open_leaderboard(){
+function open_leaderboard() {
     window.location.replace("http://localhost:8000/leaderboard")
 }
 
@@ -111,4 +111,20 @@ function logout() {
     sessionStorage.removeItem("token");
 
     window.location.replace("http://localhost:8000/auth/");
+}
+
+function delacc() {
+    const url = "http://localhost:8000/delacc";
+    fetch(url, {
+        "method": "POST",
+        "headers": {
+            "Content-Type": "application/json",
+        },
+        "body": JSON.stringify({
+            "user_id": sessionStorage.getItem("user_id"),
+        }),
+    });
+    window.location.replace("http://localhost:8000/auth/");
+    sessionStorage.removeItem("user_id");
+    sessionStorage.removeItem("token");
 }

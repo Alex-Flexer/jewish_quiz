@@ -91,6 +91,12 @@ button {
     background-color: white;
 }
 
+#delacc {
+    font-size: 20px;
+    position: absolute;
+    left: 1600px;
+    top: 800px;
+}
 
 button:hover {
     background-color: #d3dbed;

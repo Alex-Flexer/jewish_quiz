@@ -5,11 +5,35 @@ if (sessionStorage.getItem("user_id") != null) {
 function registrate_user() {
     const url = "http://localhost:8000/add_user";
 
-    const user_name = document.getElementById("user_name").value;
-    const user_password = document.getElementById("user_password").value;
-    const user_email = document.getElementById("user_email").value;
+    const user_name_field = document.getElementById("user_name");
+    const user_email_field = document.getElementById("user_email");
+    const user_password_field = document.getElementById("user_password");
 
-    console.log(user_email + ' ' + user_name + ' ' + user_password)
+    const user_name = user_email_field.value;
+    const user_email = user_email_field.value;
+    const user_password = user_password_field.value;
+
+    let is_form_full = true;
+
+    if (user_name == "") {
+        user_name_field.style.boxShadow = "0 0 10px 5px #5e2538";
+        is_form_full = false;
+    }
+
+    if (user_email == "") {
+        user_email_field.style.boxShadow = "0 0 10px 5px #5e2538";
+        is_form_full = false;
+
+    }
+    if (user_password == "") {
+        user_password_field.style.boxShadow = "0 0 10px 5px #5e2538";
+
+        is_form_full = false;
+    }
+
+    if (!is_form_full) {
+        return
+    }
 
     fetch(url, {
         "method": "POST",
@@ -93,3 +117,6 @@ function login_button() {
     window.location.replace("http://localhost:8000/login");
 }
 
+function home() {
+    window.location.replace("http://localhost:8000/israel");
+}

@@ -9,9 +9,10 @@ session = Session(engine)
 QUESTION_TYPES = {"radio", "text", "number", "image", "checkbox", "button"}
 
 
-def check_answer_compatibility_type_with_content(question: Question) -> Union[bool, Exception]:
-    question_type = question.question_type
-    question_variants = question.variants_answers
+def check_question_correctness(question_type: str, question_variants: Optional[list[str]]):
+
+    if question_type not in QUESTION_TYPES:
+        raise TypeError(f"Question type {question_type} does not exists")
 
     if question_type == "text" and question_variants:
         return TypeError("Questions type text must not have any variants for answers: "
@@ -57,8 +58,7 @@ def get_questions() -> list[dict[str | list[str]]]:
 
 
 def add_question(question: str, variants_answers: Optional[list[str]], correct_answer: str, question_type: str):
-    if question_type not in QUESTION_TYPES:
-        raise TypeError("Unknown type of question")
+    check_question_correctness(question_type=question_type, question_variants=variants_answers)
 
     response_variants_answers = [Answers(answer=answer)
                                  for answer in variants_answers] if variants_answers else None
@@ -68,12 +68,6 @@ def add_question(question: str, variants_answers: Optional[list[str]], correct_a
         variants_answers=response_variants_answers,
         correct_answer=correct_answer,
         question_type=question_type)
-
-    response_checking_question: Union[bool, Exception] =\
-        check_answer_compatibility_type_with_content(new_question)
-
-    if isinstance(response_checking_question, Exception):
-        raise response_checking_question
 
     session.add(new_question)
     session.commit()
@@ -85,16 +79,4 @@ def get_correct_answers() -> list[str]:
 
 
 if __name__ == "__main__":
-    # print(get_user_by_id(12))
-    # print(get_user_by_email("sasha.flexsdfger@gmail.com"))
-    # add_new_user("alex", "sasha.flexer@gmail.com", "alex2008")
-    # add_new_user("daniel", "daniel.suh@email.ru", "danyaSuh!2009")
-    # delete_user_by_id(2)
-    # delete_user_by_email("sasha.flexer@gmail.com")
-    # clear_db()
-
-    # add_question("what is your favourite color?", None, "5", "number")
-    # add_question()
-    # clear_db()
     ...
-    # show_db()

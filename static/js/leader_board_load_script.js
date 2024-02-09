@@ -14,7 +14,7 @@ function load_10_user() {
 }
 
 function show_leaders(json) {
-    // console.log(json);
+    console.log(json);
     const board = document.getElementById("board");
     for (let index = 0; index < json.length; index++) {
         const user = json[index];

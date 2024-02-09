@@ -34,6 +34,14 @@ label {
     margin-bottom: 10px;
 }
 
+#home {
+
+    background-color: white;
+    position: absolute;
+    left: 1450px;
+    top: 800px;
+}
+
 input[type="text"],
 input[type="email"],
 input[type="password"] {

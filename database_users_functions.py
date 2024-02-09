@@ -33,8 +33,10 @@ def get_user_by_id(user_id: int) -> Optional[User]:
 def get_user_by_email(email: str) -> Optional[User]:
     return session.scalar(select(User).where(User.email == email))
 
+
 def get_all_users():
     return session.query(User).all()
+
 
 def add_new_user(name: str, email: str, password: str, score: int = 0) -> bool:
     if user_exists(email=email):
@@ -53,7 +55,7 @@ def get_user_record_by_id(user_id: int):
     return user.score
 
 
-def set_user_score_by_id(user_id: int, new_score: int):
+def set_user_record_by_id(user_id: int, new_score: int):
     session.query(Score).filter_by(user_id=user_id).update(
         values={"score": new_score})
 
@@ -96,10 +98,4 @@ def show_db(db_name) -> None:
 
 
 if __name__ == "__main__":
-    # add_new_user("alex", "sasha.flexer@gmail.com", "alex2008", 12)
-    # add_new_user("daniel", "daniel.suh@email.ru", "danyaSuh!2009")
-    # delete_user_by_email("sasha.flexer@gmail.com")
-    # clear_db()
-    # user_id = get_user_id_by_email("sasha.flexer@gmail.com")
-    # set_user_score_by_id(user_id=user_id, new_score=22)
     show_db(User)

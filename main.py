@@ -4,8 +4,8 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from database_users_functions import (add_new_user, get_user_by_email,
-                                      get_user_record_by_id, set_user_score_by_id, get_all_users,
-                                      user_exists, delete_token, get_token_by_id, create_token)
+                                      get_user_record_by_id, set_user_record_by_id, get_all_users,
+                                      user_exists, delete_token, get_token_by_id, create_token, delete_user_by_id)
 from database_questions_functions import get_questions, get_correct_answers
 from init_questions import init
 
@@ -112,6 +112,14 @@ async def logout_user(requset: Request):
     delete_token(token=token)
 
 
+@app.post("/delacc")
+async def logout_user(requset: Request):
+    json = await requset.json()
+
+    user_id = json["user_id"]
+    delete_user_by_id(user_id=user_id)
+
+
 @app.post("/submit_answers")
 async def check_answers(request: Request) -> JSONResponse:
     json = await request.json()
@@ -132,7 +140,7 @@ async def check_answers(request: Request) -> JSONResponse:
     is_new_record = new_score > get_user_record_by_id(user_id=user_id).score
 
     if is_new_record:
-        set_user_score_by_id(user_id=user_id, new_score=new_score)
+        set_user_record_by_id(user_id=user_id, new_score=new_score)
 
     response = {"result": new_score, "is_new_record": is_new_record}
 

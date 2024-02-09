@@ -150,9 +150,11 @@ function add_selectable_answers(question) {
         let answer_field = document.createElement("div");
 
         let input_answer_field = document.createElement("input");
+        input_answer_field.setAttribute("name", "variant");
         input_answer_field.type = question_type;
 
         let answer_label = document.createElement("label");
+        answer_field.setAttribute("name", "variant");
         answer_label.innerHTML = question.variants[index_variant_answer];
 
         answer_field.appendChild(input_answer_field);
@@ -265,3 +267,4 @@ function get_image_answer() {
     let input_image_element = document.getElementsByTagName("input")[0];
     return input_image_element.src;
 }
+
