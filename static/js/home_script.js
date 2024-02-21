@@ -1,5 +1,3 @@
-let pos_last_light_candle = -1;
-
 if (!check_user_loged()) {
     window.location.replace("http://localhost:8000/auth/");
 }
@@ -7,12 +5,30 @@ else {
     load_best_score()
 }
 
+let pos_last_light_candle = -1;
+
+let sound_money = new Howl({
+    src: ['../static/music/монеты.mp3'],
+    volume: 0.5,
+});
+
+let sound_candle = new Howl({
+    src: ['../static/music/зажигание свечи.mp3'],
+    volume: 1,
+});
+
+let sound_fail_light_candle = new Howl({
+    src: ['../static/music/звук не получается зажечь.mp3'],
+    volume: 1,
+});
+
 function check_user_loged() {
     const url = "http://localhost:8000/check/user";
 
     const token = sessionStorage.getItem("token");
     const user_id = sessionStorage.getItem("user_id");
 
+    console.log(user_id, token);
     if (user_id == null || token == null) {
         return false;
     }
@@ -43,29 +59,37 @@ function open_leaderboard() {
 
 function light_candle(candle) {
     let current_pos = parseInt(candle.style.left.replace("px", ""));
-    console.log(current_pos, pos_last_light_candle);
 
     if (pos_last_light_candle == 1388 && current_pos != 1567) {
+        sound_fail_light_candle.play();
         return;
     }
 
     if (pos_last_light_candle == -1 && current_pos == 1388) {
-        console.log("some text");
         candle.style.opacity = 100;
         pos_last_light_candle = current_pos;
+        sound_candle.play();
         return;
     }
     else if (pos_last_light_candle == -1) {
+        sound_fail_light_candle.play();
         return;
     }
 
     if (pos_last_light_candle - current_pos > 65 &&
         !(pos_last_light_candle == 1447 && current_pos == 1327)) {
+
+        if (candle.style.opacity != 100) {
+            sound_fail_light_candle.play();
+        }
         return;
     }
 
-    pos_last_light_candle = current_pos;
-    candle.style.opacity = 100;
+    if (candle.style.opacity != 100) {
+        pos_last_light_candle = current_pos;
+        candle.style.opacity = 100;
+        sound_candle.play();
+    }
 }
 
 function load_best_score() {

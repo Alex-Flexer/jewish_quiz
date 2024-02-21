@@ -23,7 +23,13 @@
     left: 50px;
     top: 350px;
     width: 700px;
+    transition: 1s;
 }
+
+.money:hover {
+    transform: scale(1.3);
+}
+
 
 .hanuka {
     position: absolute;

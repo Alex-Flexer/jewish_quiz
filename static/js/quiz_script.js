@@ -2,7 +2,6 @@ if (!check_user_loged()) {
     window.location.replace("http://localhost:8000/auth");
     alert("Для прохождения теста необходимо авторизоваться.")
 }
-console.log("hahah");
 
 function check_user_loged() {
     const url = "http://localhost:8000/check/user";
@@ -93,9 +92,6 @@ function clear_previous_answer_fields() {
 }
 
 function next_question() {
-    // console.log("next_question!")
-
-    // console.log(id_current_question);
     id_current_question++;
     let current_question = questions[id_current_question];
 
@@ -109,7 +105,7 @@ function next_question() {
         let button = document.getElementById("button");
         console.log("last question");
         button.onclick = submit_answers;
-        button.innerHTML = "submit my answers";
+        button.innerHTML = "Отправить на экспертизу!";
     }
 
     clear_previous_answer_fields();
@@ -117,13 +113,11 @@ function next_question() {
     document.getElementById('question').innerHTML = current_question.question;
 
     add_answers(current_question);
-    // console.log(current_question.variants);
 }
 
 
 
 function add_answers(question) {
-    // console.log("add answers!");
 
     switch (question.question_type) {
         case "radio": add_selectable_answers(question); break;
@@ -139,7 +133,6 @@ function add_answers(question) {
 }
 
 function add_selectable_answers(question) {
-    // console.log("with label!");
 
     let question_type = question.question_type;
     let answers_field = document.getElementById("answer_field");
@@ -165,7 +158,6 @@ function add_selectable_answers(question) {
 }
 
 function add_number_answer(question) {
-    // console.log("with number!");
 
     let answers_field = document.getElementById("answer_field");
 
@@ -180,7 +172,6 @@ function add_number_answer(question) {
 }
 
 function add_text_answer() {
-    // console.log("with text!");
 
     let answers_field = document.getElementById("answer_field");
 
@@ -193,7 +184,7 @@ function add_text_answer() {
 }
 
 function add_image_answer(question) {
-    // console.log("with image!");
+    
     let answers_field = document.getElementById("answer_field");
 
     let amount = question.variants.length;

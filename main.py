@@ -1,13 +1,16 @@
 import uvicorn
 from fastapi import Request
 from fastapi import FastAPI
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from database_users_functions import (add_new_user, get_user_by_email,
                                       get_user_record_by_id, set_user_record_by_id, get_all_users,
-                                      user_exists, delete_token, get_token_by_id, create_token, delete_user_by_id)
+                                      user_exists, delete_token, get_token_by_id,
+                                      create_token, delete_user_by_id)
+
 from database_questions_functions import get_questions, get_correct_answers
 from init_questions import init
+import starlette.status as status
 
 
 app = FastAPI()
@@ -22,8 +25,13 @@ async def send_auth_page() -> FileResponse:
     return FileResponse(r"static/html/auth_page.html")
 
 
+@app.get("/")
+async def redirect_to_israel():
+    return RedirectResponse(url="http://localhost:8000/israel", status_code=status.HTTP_302_FOUND)
+
+
 @app.get("/israel/")
-async def send_home_page() -> FileResponse:
+async def send_home_israel_page() -> FileResponse:
     return FileResponse("static/html/home_page.html")
 
 

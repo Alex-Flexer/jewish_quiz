@@ -95,17 +95,16 @@ function check_user(json, status) {
     if (status == 200) {
         let accepted = json.accepted;
         if (accepted) {
-            alert("Welcome!");
             sessionStorage.setItem("user_id", json.id);
             sessionStorage.setItem("token", json.token);
             window.location.replace("http://localhost:8000/israel/");
         }
         else {
-            alert("Uncorrect password");
+            alert("Неверный пароль");
         }
     }
     else {
-        alert("User was not found");
+        alert("Пользовател не был найден.");
     }
 }
 
