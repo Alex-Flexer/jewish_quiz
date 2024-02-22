@@ -6,7 +6,7 @@ def init():
 
     add_question(
         question="Какой день у евреев- день отдыха ?",
-        variants_answers=["cуббота", "воскресенье", "пятница", "никакой"],
+        variants_answers=["суббота", "воскресенье", "пятница", "никакой"],
         correct_answer="суббота",
         question_type="radio")
 
@@ -57,7 +57,7 @@ def init():
     add_question(
         question="Считается ли Иисус святым у евреев ? (да/нет)",
         variants_answers=None,
-        correct_answer="да",
+        correct_answer="нет",
         question_type="text")
 
     add_question(

@@ -33,7 +33,7 @@ class User(Base):
         return f"{self.id} {self.name} {self.email} {self.password.password} {self.score.score}"
 
     def __repr__(self) -> str:
-        return f"{self.id} {self.name} {self.email} {self.password} {self.score}"
+        return f"{self.id} {self.name} {self.email} {self.password.password} {self.score}"
 
 
 class Password(Base):

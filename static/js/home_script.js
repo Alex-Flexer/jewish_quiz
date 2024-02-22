@@ -7,10 +7,35 @@ else {
 
 let pos_last_light_candle = -1;
 
-let sound_money = new Howl({
-    src: ['../static/music/монеты.mp3'],
-    volume: 0.5,
-});
+
+// init sound variales
+
+let sounds_money = [
+    new Howl({
+        src: ['../static/music/деньги/0-29.mp3'],
+        volume: 0.5,
+    }),
+
+    new Howl({
+        src: ['../static/music/деньги/30-54.mp3'],
+        volume: 0.5,
+    }),
+
+    new Howl({
+        src: ['../static/music/деньги/55-69.mp3'],
+        volume: 0.5,
+    }),
+
+    new Howl({
+        src: ['../static/music/деньги/70-99.mp3'],
+        volume: 0.5,
+    }),
+
+    new Howl({
+        src: ['../static/music/деньги/100.mp3'],
+        volume: 0.5,
+    })
+]
 
 let sound_candle = new Howl({
     src: ['../static/music/зажигание свечи.mp3'],
@@ -21,6 +46,7 @@ let sound_fail_light_candle = new Howl({
     src: ['../static/music/звук не получается зажечь.mp3'],
     volume: 1,
 });
+
 
 function check_user_loged() {
     const url = "http://localhost:8000/check/user";
@@ -92,6 +118,30 @@ function light_candle(candle) {
     }
 }
 
+function on_click_money_bag() {
+    let score = sessionStorage.getItem("record");
+
+    if (score <= 29) {
+        sounds_money[0].play();
+    }
+
+    else if (score <= 54) {
+        sounds_money[1].play();
+    }
+
+    else if (score <= 69) {
+        sounds_money[2].play();
+    }
+
+    else if (score <= 99) {
+        sounds_money[3].play();
+    }
+
+    else {
+        sounds_money[4].play();
+    }
+}
+
 function load_best_score() {
     const url = "http://localhost:8000/record";
     const user_id = sessionStorage.getItem("user_id");
@@ -109,6 +159,7 @@ function load_best_score() {
         .then((text) => JSON.parse(text))
         .then((json) => json.record)
         .then((record) => {
+            sessionStorage.setItem("record", record);
             document.getElementById("record").innerHTML = `Мой коэффициент еврейства: ${record}`;
         })
         .catch((error) => console.log(error));

@@ -39,6 +39,7 @@ def get_all_users():
 
 
 def add_new_user(name: str, email: str, password: str, score: int = 0) -> bool:
+    print(email, name)
     if user_exists(email=email):
         return False
 

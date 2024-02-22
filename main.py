@@ -134,12 +134,14 @@ async def check_answers(request: Request) -> JSONResponse:
 
     user_id = json["user_id"]
 
-    user_answers = json["answers"]
-    correct_answers = get_correct_answers()
+    user_answers: list[str] = [user_answer if isinstance(user_answer, str) else ""
+                               for user_answer in json["answers"]]
+
+    correct_answers: list[str] = get_correct_answers()
 
     amount_questions = len(correct_answers)
 
-    amount_correct_answers = sum([(user_answer == correct_answer)
+    amount_correct_answers = sum([(user_answer.lower() == correct_answer.lower())
                                   for user_answer, correct_answer in zip(correct_answers, user_answers)])
 
     new_score = round((amount_correct_answers / amount_questions) * 100)
@@ -150,7 +152,7 @@ async def check_answers(request: Request) -> JSONResponse:
     if is_new_record:
         set_user_record_by_id(user_id=user_id, new_score=new_score)
 
-    response = {"result": new_score, "is_new_record": is_new_record}
+    response = {"result": new_score}
 
     return JSONResponse(content=response, status_code=200)
 
@@ -183,4 +185,4 @@ async def send_record() -> FileResponse:
 
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', port=8000, reload=True)
+    uvicorn.run('main:app', port=8000, reload=True)    

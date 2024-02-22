@@ -9,31 +9,29 @@ function registrate_user() {
     const user_email_field = document.getElementById("user_email");
     const user_password_field = document.getElementById("user_password");
 
-    const user_name = user_email_field.value;
+    const user_name = user_name_field.value;
     const user_email = user_email_field.value;
     const user_password = user_password_field.value;
 
-    let is_form_full = true;
+    let is_form_full = user_name && user_email && user_password;
 
     if (user_name == "") {
         user_name_field.style.boxShadow = "0 0 10px 5px #5e2538";
-        is_form_full = false;
     }
 
     if (user_email == "") {
         user_email_field.style.boxShadow = "0 0 10px 5px #5e2538";
-        is_form_full = false;
-
     }
+
     if (user_password == "") {
         user_password_field.style.boxShadow = "0 0 10px 5px #5e2538";
-
-        is_form_full = false;
     }
 
     if (!is_form_full) {
-        return
+        return;
     }
+
+    console.log(user_name, user_email, user_password);
 
     fetch(url, {
         "method": "POST",
